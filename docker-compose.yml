@@ -1,0 +1,75 @@
+services:
+  frontend:
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    ports:
+      - "4200:4200"
+    image: todo-frontend:latest
+    container_name: dev-todo-frontend
+    volumes:
+      - ./frontend:/app
+    stdin_open: true
+    tty: true
+    networks:
+      - dev-todo-network
+    depends_on:
+      backend:
+        condition: service_healthy
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    ports:
+      - "8000:8000"
+    image: todo-backend:latest
+    container_name: dev-todo-backend
+    volumes:
+      - ./backend:/app
+    stdin_open: true
+    tty: true
+    networks:
+      - dev-todo-network
+    environment:
+      - POSTGRES_DB_HOST=database
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_DB_USERNAME=${POSTGRES_DB_USERNAME}
+      - POSTGRES_DB_PASSWORD=${POSTGRES_DB_PASSWORD}
+      - POSTGRES_DB_PORT=${POSTGRES_DB_PORT}
+    depends_on:
+      database:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:8000/health/"]
+      interval: 5m
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+  database:
+    image: postgres:18.2
+    container_name: dev-database
+    ports:
+      - "5433:5432"
+    volumes:
+      - shared-postgres-data:/var/lib/postgresql
+    restart: always
+    environment:
+      - POSTGRES_USER=${POSTGRES_DB_USERNAME}
+      - POSTGRES_PASSWORD=${POSTGRES_DB_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    networks:
+      - dev-todo-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  shared-postgres-data:
+    name: shared-postgres-data
+
+networks:
+  dev-todo-network:
+    name: dev-todo-network
+    external: true

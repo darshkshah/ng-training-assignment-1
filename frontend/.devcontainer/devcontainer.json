@@ -1,0 +1,15 @@
+{
+  "name": "Angular Frontend",
+  "dockerComposeFile": "../../docker-compose.yml",
+  "service": "frontend",
+  "workspaceFolder": "/workspace/frontend",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "angular.ng-template",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode"
+      ]
+    }
+  }
+}

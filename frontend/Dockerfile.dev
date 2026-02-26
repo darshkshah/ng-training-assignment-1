@@ -1,0 +1,15 @@
+FROM node:24.13.1-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+
+RUN npm install
+
+COPY . .
+
+RUN npx ng analytics disable
+
+EXPOSE 4200
+
+CMD ["npx", "ng", "serve", "--host", "0.0.0.0"]
