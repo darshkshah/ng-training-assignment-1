@@ -25,6 +25,7 @@ SECRET_KEY = 'django-insecure-#12m#z0r7%*2n3n_&9tuynpyyq9r%o@-v_%m&8$#js3pd7_j$-
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+APPEND_SLASH = False
 
 ALLOWED_HOSTS = []
 
@@ -149,7 +150,9 @@ REST_FRAMEWORK = {
         "rest_framework.renderers.BrowsableAPIRenderer",
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'users_api.authentication.CookieJWTAuthentication',
+        'rest_framework.authentication.TokenAuthentication'
     ],
 }
 

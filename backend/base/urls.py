@@ -18,12 +18,18 @@ from django.contrib import admin
 from django.urls import path, include
 from health_api.views import HealthView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from users_api.views import CookieTokenObtainPairView, CookieTokenRefreshView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('health/', HealthView.as_view(), name="health-api"),
+    path('health/', HealthView.as_view(), name="health_api"),
     path('api-auth/', include('rest_framework.urls')),
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('api/users/', include('users_api.urls'))
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair_api'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh_api'),
+
+    path('api/token/web/', CookieTokenObtainPairView.as_view(), name='cookie_token_obtain_pair_api'),
+    path('api/token/refresh/web/', CookieTokenRefreshView.as_view(), name='cookie_token_refresh_api'),
+
+    path('api/users/', include('users_api.urls')),
+    path('api/todo/', include('todo_api.urls')),
 ]
