@@ -1,0 +1,67 @@
+/* Layout */
+.task-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 16px 32px;
+
+    background-color: #f5f5f5;
+    border: 1px solid grey;
+}
+
+.left {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.right {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 400px;
+}
+
+.left-top {
+    display: flex;
+    align-items: center;
+}
+
+.task-header {
+    margin-left: 16px;
+}
+
+/* Styles/Color */
+.icon-container {
+    background-color: #ba0d4d;
+}
+
+.text-color-importance-high {
+    color: #787d82;
+}
+
+.text-color-importance-low {
+    color: #999999;
+}
+
+/* Responsiveness */
+@media (min-width: 769px) {
+
+}
+
+@media (max-width: 768px) {
+    .task-bar {
+        flex-direction: column;
+        align-items: start;
+        gap: 24px;
+    }
+
+
+    .right {
+        align-self: center;
+        width: 100%;
+        /* width: calc(min(100%, 500px)); */
+    }
+}
