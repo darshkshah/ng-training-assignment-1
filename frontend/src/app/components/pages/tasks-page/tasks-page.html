@@ -1,12 +1,22 @@
 <app-login-status></app-login-status>
 <app-header
+    (newTaskClickedEvent)="onNewTask()"
     [(modalVisibility)]="parentModalVisibility">
 </app-header>
 
-<app-task-table></app-task-table>
+<app-task-table
+    (edit)="onEditTask($event)"
+    (taskToBeDeleted)="onDeleteTask($event)">
+</app-task-table>
 
 <app-footer style="margin-top: auto;"></app-footer>
 
 <app-task-create-form
+    [task]="editingTask()"
     [(modalVisibility)]="parentModalVisibility">
 </app-task-create-form>
+
+<app-delete-task-form
+    [task]="taskToBeDeleted()" 
+    [(isOpen)]="deleteModalVisibility">
+</app-delete-task-form>

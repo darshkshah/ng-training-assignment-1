@@ -1,0 +1,19 @@
+.slds-modal__header, .slds-button_brand {
+    background-color: #c93c3c;
+}
+
+.slds-button_brand {
+    border-color: #c93c3c;
+}
+
+.slds-modal__title {
+    color: white;
+}
+
+.slds-modal__content {
+    height: calc(min(200px, 80vh));
+}
+
+.display-none {
+    display: none;
+}

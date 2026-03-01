@@ -35,17 +35,11 @@ export class AuthService {
 
     notificationsService = inject(NotificationsService);
 
-    // username = signal<string>("");
-    // firstName = signal<string>("");
-    // lastName = signal<string>("");
-    // email = signal<string>("");
-    // userId = signal<number>(-1);
     user = signal<AuthUser | null>(null);
     loggedIn = computed(() => this.user() !== null);
 
 
     cookieLoginRequest(username: string = "darshshah", password: string = "password123") {
-        console.log("yes reched")
         return this.http.post(this.loginApiUrl, { username, password }).pipe(
             switchMap(() => this.http.get<AuthUser>(this.checkMeApiUrl)),
             tap(user => {

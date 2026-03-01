@@ -105,7 +105,6 @@ export class Datepicker {
             month: '2-digit',
             day: '2-digit'
         }).format(selectedDate);
-        // console.log(selectedDate, formatted);
         this.selectedDate = formatted;
         this.datePickerVisibility = false;
         this.control().setValue(formatted);
@@ -148,18 +147,5 @@ export class Datepicker {
     toggleDatePickerVisibility() {
         this.datePickerVisibility = !this.datePickerVisibility;
         this.control().markAsTouched();
-
-    //     get isMarkedError() {
-    //     return !this.datePickerVisibility && (this.control().hasError('required') || this.control().invalid) && (this.control().dirty || this.control().touched)
-    // }
-
-        // console.log(this.isMarkedError);
-
-        // console.log("!this.datePickerVisibility", !this.datePickerVisibility);
-        // console.log("(this.control().hasError('required') || this.control().invalid)", this.control().hasError('required') || this.control().invalid);
-        // console.log("(this.control().dirty || this.control().touched)", this.control().dirty || this.control().touched);
-
-
-
     }
 }

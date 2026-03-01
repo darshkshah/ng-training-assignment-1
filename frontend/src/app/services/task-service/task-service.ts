@@ -1,7 +1,8 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Injectable, signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { TaskModel } from '../../models/task.model';
-import { Observable } from 'rxjs';
+import { catchError, Observable, of, tap } from 'rxjs';
+import { NotificationsService } from '../notifications/notifications-service';
 
 interface TaskApiResponse {
     results: TaskModel[];
@@ -19,8 +20,10 @@ export class TaskService {
     tasks = signal<TaskModel[]>([]);
     count = signal<number>(4);
 
+    notificationService = inject(NotificationsService);
+
     apiUrl:string = 'api/todo/tasks/';
-    editRetrieveTaskApiUrl(taskId:number):string {
+    editRetrieveDeleteTaskApiUrl(taskId:number):string {
         return `api/todo/tasks/${taskId}/`
     }
 
@@ -29,7 +32,7 @@ export class TaskService {
     }
 
     retrieveTask(id:number) {
-        return this.http.get(this.editRetrieveTaskApiUrl(id));
+        return this.http.get(this.editRetrieveDeleteTaskApiUrl(id));
     }
 
     newTask(task: Object) {
@@ -37,7 +40,29 @@ export class TaskService {
     }
 
     editTask(task:Object, taskId: number) {
-        return this.http.patch(this.editRetrieveTaskApiUrl(taskId), task);
+        return this.http.patch(this.editRetrieveDeleteTaskApiUrl(taskId), task);
+    }
+
+    deleteTask(taskId:number) {
+        return this.http.delete(this.editRetrieveDeleteTaskApiUrl(taskId)).pipe(
+            tap(body => {
+                this.notificationService.addNotification("Success", "Deleted task successfully");
+            }),
+            catchError(error => {
+                if (error.status == 401) {
+                    const num = this.notificationService.addNotification("Unauthorized", "You are unauthorized to delete tasks not created by or assigned to you");
+                    setTimeout(() => {
+                        this.notificationService.removeNotification(num)
+                    }, 5000);
+                } else if (error.status == 404) {
+                    const num = this.notificationService.addNotification("Not Found", "The task you wanted to delete might have already been deleted.");
+                    setTimeout(() => {
+                        this.notificationService.removeNotification(num)
+                    }, 5000);
+                }
+                return of(null);
+            })
+        );
     }
 
     addTaskLocally(task:TaskModel) {

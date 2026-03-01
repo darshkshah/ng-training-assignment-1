@@ -209,7 +209,9 @@
                 </td>
                 <td role="gridcell" style="width:3.25rem">
                     <app-menu-button-task-table
-                        [taskId]="task.id">
+                        [taskId]="task.id"
+                        (edit)="onEdit(task)"
+                        (delete)="onDelete(task)">
                     </app-menu-button-task-table>
                 </td>
             </tr>

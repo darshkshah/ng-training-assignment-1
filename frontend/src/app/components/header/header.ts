@@ -1,4 +1,4 @@
-import { Component, inject, input, Input, model } from '@angular/core';
+import { Component, EventEmitter, inject, input, Input, model, Output } from '@angular/core';
 import { TaskService } from '../../services/task-service/task-service';
 import { Notifications } from '../notifications/notifications';
 import { NotificationsService } from '../../services/notifications/notifications-service';
@@ -13,9 +13,11 @@ export class Header {
     modalVisibility = model<boolean>();
     taskService = inject(TaskService)
     notificationsService = inject(NotificationsService)
+    @Output() newTaskClickedEvent = new EventEmitter<void>()
 
     newTaskOpen() {
         this.modalVisibility.set(true);
+        this.newTaskClickedEvent.emit();
     }
 
     onRefresh() {

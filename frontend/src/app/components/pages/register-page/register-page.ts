@@ -56,7 +56,6 @@ export class RegisterPage {
     }
 
     onRegister() {
-        console.log(this.registerFormGroup.getRawValue());
         if (this.registerFormGroup.invalid) {
             this.registerFormGroup.markAllAsTouched();
         } else {

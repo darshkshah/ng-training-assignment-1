@@ -82,7 +82,6 @@ export class TaskCreateForm {
     }
 
     handleSubmit() {
-        // console.log(this.todoFormGroup.value)
         if (this.todoFormGroup.invalid) {
             this.todoFormGroup.markAllAsTouched();
         } else {
@@ -96,9 +95,18 @@ export class TaskCreateForm {
             }
             const currentTask = this.task()
             if (currentTask != null) {
-                this.taskService.editTask(task, currentTask.id).subscribe(body => {
-                    console.log(body);
-                })
+                this.taskService.editTask(task, currentTask.id).subscribe({
+                    next: () => {
+                        const num = this.notificationsService.addNotification("Success", "Task updated");
+                        setTimeout(() => {
+                            this.notificationsService.removeNotification(num);
+                        }, 5000);
+                    },
+                    error: (error) => {
+
+                    }
+                });
+                this.modalVisibility.set(false);
             } else {
                 this.taskService.newTask(task).subscribe(response => {
                     if (response.status == 201) {
@@ -120,10 +128,6 @@ export class TaskCreateForm {
     }
 
     close() {
-        this.modalVisibility.set(false);
-    }
-
-    cancelAndClose() {
         this.todoFormGroup.reset();
         this.modalVisibility.set(false);
     }

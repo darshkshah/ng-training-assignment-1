@@ -1,5 +1,4 @@
 import { Component, inject } from '@angular/core';
-import { LoginService } from '../../../services/auth/login-service';
 import { RouterLink } from "@angular/router";
 import { AuthService } from '../../../services/auth/auth-service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -32,7 +31,6 @@ export class LoginPage {
     }
 
     onLogin() {
-        console.log(this.loginFormGroup.getRawValue());
         if (this.loginFormGroup.invalid) {
             this.loginFormGroup.markAllAsTouched()
         } else {
@@ -41,10 +39,10 @@ export class LoginPage {
                 this.loginFormGroup.controls.password.value
             ).subscribe({
                 next: user => {
-                    // console.log("Success darsh:", user);
+                    
                 },
                 error: err => {
-                    // console.log("Login failed darsh:", err);
+
                 }
             })
         }

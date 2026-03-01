@@ -1,0 +1,26 @@
+<section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+    class="slds-modal slds-fade-in-open slds-modal_small" [class]="{'display-none': !isOpen()}">
+    <div class="slds-modal__container">
+        <button class="slds-button slds-button_icon slds-modal__close" (click)="onClose()">
+            <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+            </svg>
+            <span class="slds-assistive-text">Cancel and close</span>
+        </button>
+        <div class="slds-modal__header">
+            <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate" tabindex="-1">Delete Task</h1>
+        </div>
+        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+            <p>Do you want to delete the task assigned to {{task()?.assigned_to?.first_name}} {{task()?.assigned_to?.last_name}}?</p>
+            @if (task() != null) {
+                Task Description: {{task()?.description}}
+            }
+            <p></p>
+        </div>
+        <div class="slds-modal__footer">
+            <button class="slds-button slds-button_neutral" aria-label="Cancel and close" (click)="onClose()">Cancel</button>
+            <button class="slds-button slds-button_brand" (click)="onDelete()">Delete</button>
+        </div>
+    </div>
+</section>
+<div class="slds-backdrop" role="presentation" [class]="{'slds-backdrop_open': isOpen()}"></div>
