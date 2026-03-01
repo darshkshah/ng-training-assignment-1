@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import date
 
 from users_api.models import CustomUser
 
@@ -37,8 +38,7 @@ class Task(models.Model):
     )
 
     due_date = models.DateField(
-        blank=True,
-        null=True
+        default=date.today
     )
 
     priority = models.CharField(

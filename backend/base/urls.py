@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from health_api.views import HealthView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from users_api.views import CookieTokenObtainPairView, CookieTokenRefreshView
+from users_api.views import CookieTokenObtainPairView, CookieTokenRefreshView, LogoutView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,6 +26,7 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair_api'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh_api'),
+    path('api/logout/', LogoutView.as_view(), name="cookie-logout-api-view"),
 
     path('api/token/web/', CookieTokenObtainPairView.as_view(), name='cookie_token_obtain_pair_api'),
     path('api/token/refresh/web/', CookieTokenRefreshView.as_view(), name='cookie_token_refresh_api'),

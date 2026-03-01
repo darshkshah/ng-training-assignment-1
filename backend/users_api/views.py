@@ -1,13 +1,18 @@
-from rest_framework import status
+from rest_framework import status, generics, views
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.authtoken.models import Token
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from django.contrib.auth import authenticate
 
-from .serializers import UserSerializer
+from .serializers import UserSerializer, UserReadSerializer
+from .models import CustomUser
 
 # Create your views here.
+class UserListView(generics.ListAPIView):
+    queryset = CustomUser.objects.all()
+    serializer_class = UserReadSerializer
+
 @api_view(['POST'])
 def register_user(request):
     serializer = UserSerializer(data=request.data)
@@ -18,6 +23,25 @@ def register_user(request):
             "detail": "user registered"
         }, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class CheckUserLoggedInView(views.APIView):
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return Response({
+                'user_id': request.user.id,
+                'username': request.user.username,
+                'email': request.user.email,
+                'first_name': request.user.first_name,
+                'last_name': request.user.last_name,
+            })
+        return Response({'detail': 'User is not authenticated.'}, status=status.HTTP_401_UNAUTHORIZED)
+
+class LogoutView(views.APIView):
+    def post(self, request, *args, **kwargs):
+        response = Response({"content": "Logout Success"}, status=status.HTTP_200_OK)
+        response.delete_cookie("access")
+        response.delete_cookie("refresh")
+        return response
 
 class CookieTokenObtainPairView(TokenObtainPairView):
     def post(self, request, *args, **kwargs):
@@ -76,7 +100,7 @@ class CookieTokenRefreshView(TokenRefreshView):
             value=new_access,
             httponly=True,
             secure=True,
-            samesite="Strict",
+            samesite="Lax",
             max_age=60*60*24*7,
         )
 
