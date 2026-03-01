@@ -20,3 +20,12 @@ export interface TaskCreateModel {
     description: string;
     assigned_to_id: number;
 }
+
+export interface TaskUpdateModel {
+    id: number;
+    status: 'pending' | 'in_progress' | 'completed';
+    due_date: string;
+    priority: 'low' | 'medium' | 'high';
+    description: string;
+    assigned_to_id: number;
+}

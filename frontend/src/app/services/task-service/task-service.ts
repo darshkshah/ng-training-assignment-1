@@ -20,13 +20,24 @@ export class TaskService {
     count = signal<number>(4);
 
     apiUrl:string = 'api/todo/tasks/';
+    editRetrieveTaskApiUrl(taskId:number):string {
+        return `api/todo/tasks/${taskId}/`
+    }
 
     loadTasks() : Observable<HttpResponse<TaskApiResponse>> {
         return this.http.get<TaskApiResponse>(this.apiUrl, { observe: 'response' });
     }
 
+    retrieveTask(id:number) {
+        return this.http.get(this.editRetrieveTaskApiUrl(id));
+    }
+
     newTask(task: Object) {
         return this.http.post(this.apiUrl, task, { observe: 'response' });
+    }
+
+    editTask(task:Object, taskId: number) {
+        return this.http.patch(this.editRetrieveTaskApiUrl(taskId), task);
     }
 
     addTaskLocally(task:TaskModel) {

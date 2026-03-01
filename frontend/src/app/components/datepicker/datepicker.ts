@@ -1,5 +1,5 @@
 import { Component, computed, EventEmitter, input, Output, signal } from '@angular/core';
-import { FormControl, FormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 interface CalendarDay {
     day: number,
@@ -18,7 +18,7 @@ interface CalendarMonth {
 
 @Component({
     selector: 'app-datepicker',
-    imports: [FormsModule],
+    imports: [ReactiveFormsModule, FormsModule],
     templateUrl: './datepicker.html',
     styleUrl: './datepicker.css',
 })
@@ -153,11 +153,11 @@ export class Datepicker {
     //     return !this.datePickerVisibility && (this.control().hasError('required') || this.control().invalid) && (this.control().dirty || this.control().touched)
     // }
 
-        console.log(this.isMarkedError);
+        // console.log(this.isMarkedError);
 
-        console.log("!this.datePickerVisibility", !this.datePickerVisibility);
-        console.log("(this.control().hasError('required') || this.control().invalid)", this.control().hasError('required') || this.control().invalid);
-        console.log("(this.control().dirty || this.control().touched)", this.control().dirty || this.control().touched);
+        // console.log("!this.datePickerVisibility", !this.datePickerVisibility);
+        // console.log("(this.control().hasError('required') || this.control().invalid)", this.control().hasError('required') || this.control().invalid);
+        // console.log("(this.control().dirty || this.control().touched)", this.control().dirty || this.control().touched);
 
 
 

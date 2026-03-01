@@ -1,0 +1,26 @@
+<div class="slds-dropdown-trigger slds-dropdown-trigger_click" [class]="{'slds-is-open': isOpen()}">
+    <!-- [class]="{'slds-is-open': isOpen()}" -->
+    <!-- slds-is-open -->
+    <button class="slds-button slds-button_icon slds-button_icon-border-filled slds-button_icon-x-small"
+        aria-haspopup="true" tabindex="-1" title="More actions for Cheese Corp"
+        (click)="toggleIsOpen()" >
+        <svg class="slds-button__icon slds-button__icon_hint slds-button__icon_small" aria-hidden="true">
+            <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down"></use>
+        </svg>
+        <span class="slds-assistive-text">More actions for Cheese Corp</span>
+    </button>
+    <div class="slds-dropdown slds-dropdown_right">
+        <ul class="slds-dropdown__list" role="menu" aria-label="Show More">
+            <li class="slds-dropdown__item" role="presentation">
+                <a href="#" role="menuitem" tabindex="0">
+                    <span title="Menu Item One">Edit</span>
+                </a>
+            </li>
+            <li class="slds-dropdown__item" role="presentation">
+                <a href="#" role="menuitem" tabindex="-1">
+                    <span title="Menu Item Two">Delete</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

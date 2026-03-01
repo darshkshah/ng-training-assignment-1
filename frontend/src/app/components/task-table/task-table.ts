@@ -2,10 +2,11 @@ import { Component, inject } from '@angular/core';
 import { TaskService } from '../../services/task-service/task-service';
 import { DatePipe, TitleCasePipe } from '@angular/common';
 import { TextReplacePipe } from '../../pipes/text-replace-pipe/text-replace-pipe';
+import { MenuButtonTaskTable } from '../menu-button-task-table/menu-button-task-table';
 
 @Component({
   selector: 'app-task-table',
-  imports: [TitleCasePipe, DatePipe, TextReplacePipe],
+  imports: [TitleCasePipe, DatePipe, TextReplacePipe, MenuButtonTaskTable],
   templateUrl: './task-table.html',
   styleUrl: './task-table.css',
 })

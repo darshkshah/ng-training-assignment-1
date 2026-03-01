@@ -3,7 +3,8 @@
     <label class="slds-form-element__label" for="date-input-id-default"><abbr class="slds-required"
             title="required" aria-hidden="true">* </abbr>Date</label>
     <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_right">
-        <input type="text" id="date-input-id-default" placeholder="Assign task due date..." class="slds-input" (click)="toggleDatePickerVisibility()" [(ngModel)]="selectedDate"/>
+        <input type="text" id="date-input-id-default" placeholder="Assign task due date..." class="slds-input" (click)="toggleDatePickerVisibility()" [formControl]="control()"/>
+        <!-- [(ngModel)]="selectedDate" -->
         <button class="slds-button slds-button_icon slds-input__icon slds-input__icon_right" title="Select a date">
             <svg class="slds-button__icon" aria-hidden="true">
                 <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#event"></use>

@@ -1,8 +1,9 @@
 import { TitleCasePipe } from '@angular/common';
-import { Component, computed, input, signal } from '@angular/core';
+import { Component, computed, input, Signal, signal } from '@angular/core';
 import { PickListOption } from '../../models/picklist-option.model';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { TextReplacePipe } from '../../pipes/text-replace-pipe/text-replace-pipe';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 
 @Component({
@@ -15,16 +16,23 @@ export class Picklist {
     inputData = input.required<{"title": string, "field" : string, "todoFormGroupFieldName": string}>();
     picklistOptions = input.required<PickListOption[]>();
     control = input.required<FormControl>();
+
     isOpen = false;
     selectedOption= signal<string>("");
-    // markAsError = computed<boolean>(() => !this.isOpen && this.control().hasError('required') && (this.control().dirty || this.control().touched))
 
     get isMarkedError() {
         return !this.isOpen && this.control().hasError('required') && (this.control().dirty || this.control().touched)
     }
 
     ngOnInit() {
-        // console.log(this.input);
+        this.control().valueChanges.subscribe(value => {
+            if (this.inputData().field == 'assigned_to_id') {
+                const updated = this.picklistOptions().find(option => option.id === value)?.content ?? ""
+                this.selectedOption.set(updated);
+            } else {
+                this.selectedOption.set(value);
+            }
+        })
     }
 
     toggleIsOpen() {

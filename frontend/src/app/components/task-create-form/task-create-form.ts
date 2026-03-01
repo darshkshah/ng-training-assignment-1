@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, model, Output, signal } from '@angular/core';
+import { Component, effect, EventEmitter, inject, input, model, Output, signal } from '@angular/core';
 import { Datepicker } from '../datepicker/datepicker';
 import { UserService } from '../../services/users/user-service';
 import { Picklist } from '../picklist/picklist';
@@ -6,6 +6,7 @@ import { PickListOption } from '../../models/picklist-option.model';
 import { NotificationsService } from '../../services/notifications/notifications-service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TaskService } from '../../services/task-service/task-service';
+import { TaskUpdateModel } from '../../models/task.model';
 
 interface TaskFormInputsInterface {
     assigned_to_id: string,
@@ -25,6 +26,24 @@ export class TaskCreateForm {
     // modalVisibility = signal<boolean>(true);
     modalVisibility = model<boolean>();
 
+    // Testing this out
+    task = input<TaskUpdateModel | null>(null);
+    patchEffect = effect(() => {
+        const t = this.task();
+
+        if (t) {
+        this.todoFormGroup.patchValue({
+            todoStatus: t.status,
+            todoDueDate: t.due_date,
+            todoPriority: t.priority,
+            todoDescription: t.description,
+            todoAssignedTo: `${t.assigned_to_id}`
+        });
+        }
+    });
+
+
+
     userService = inject(UserService);
     notificationsService = inject(NotificationsService)
     taskService = inject(TaskService);
@@ -35,9 +54,9 @@ export class TaskCreateForm {
     todoFormGroup = new FormGroup({
         todoDescription: new FormControl<string>("", [Validators.required]),
         todoDueDate: new FormControl<string>("", [Validators.required]),
-        todoPriority: new FormControl<string>("", [Validators.required]),
-        todoStatus: new FormControl<string>("", [Validators.required]),
-        todoAssignedTo: new FormControl<string>("", [Validators.required])
+        todoPriority: new FormControl<string>("high", [Validators.required]),
+        todoStatus: new FormControl<string>("completed", [Validators.required]),
+        todoAssignedTo: new FormControl<string>("1", [Validators.required])
     })
 
     get isDescriptionMarkedError() {
@@ -75,20 +94,27 @@ export class TaskCreateForm {
                 description: todoControls.todoDescription.value,
                 assigned_to_id: todoControls.todoAssignedTo.value
             }
-            this.taskService.newTask(task).subscribe(response => {
-                if (response.status == 201) {
-                    const id: number = this.notificationsService.addNotification("Success", "Added new task");
-                    setTimeout(() => {
-                        this.notificationsService.removeNotification(id)
-                    }, 5000);
-                } else {
-                    const id: number = this.notificationsService.addNotification("Failed", `Body: ${response.body?.toString().slice(0, 50)}`);
-                    setTimeout(() => {
-                        this.notificationsService.removeNotification(id)
-                    }, 5000);
-                }
-                this.modalVisibility.set(false);
-            });
+            const currentTask = this.task()
+            if (currentTask != null) {
+                this.taskService.editTask(task, currentTask.id).subscribe(body => {
+                    console.log(body);
+                })
+            } else {
+                this.taskService.newTask(task).subscribe(response => {
+                    if (response.status == 201) {
+                        const id: number = this.notificationsService.addNotification("Success", "Added new task");
+                        setTimeout(() => {
+                            this.notificationsService.removeNotification(id)
+                        }, 5000);
+                    } else {
+                        const id: number = this.notificationsService.addNotification("Failed", `Body: ${response.body?.toString().slice(0, 50)}`);
+                        setTimeout(() => {
+                            this.notificationsService.removeNotification(id)
+                        }, 5000);
+                    }
+                    this.modalVisibility.set(false);
+                });
+            }
 
         }
     }
