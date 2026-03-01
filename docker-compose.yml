@@ -7,8 +7,10 @@ services:
       - "4200:4200"
     image: todo-frontend:latest
     container_name: dev-todo-frontend
+    user: "${UID}:${GID}"
     volumes:
       - ./frontend:/app
+      - /app/node_modules
     stdin_open: true
     tty: true
     networks:
@@ -23,6 +25,7 @@ services:
     ports:
       - "8000:8000"
     image: todo-backend:latest
+    user: "${UID}:${GID}"
     container_name: dev-todo-backend
     volumes:
       - ./backend:/app
@@ -41,7 +44,7 @@ services:
         condition: service_healthy
     healthcheck:
       test: ["CMD", "curl", "--fail", "http://localhost:8000/health/"]
-      interval: 5m
+      interval: 5s
       timeout: 5s
       retries: 5
     restart: unless-stopped
@@ -60,7 +63,7 @@ services:
     networks:
       - dev-todo-network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ["CMD-SHELL", "pg_isready -U darshshah -d todo"]
       interval: 5s
       timeout: 5s
       retries: 5
