@@ -19,7 +19,6 @@ export class App {
     protected readonly title = signal('to-do-list');
 
     loginFunction() {
-        console.log("Yes login please");
         this.authService.cookieLoginRequest().subscribe((data) => {
             console.log(data);
         });

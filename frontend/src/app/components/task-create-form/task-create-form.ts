@@ -74,10 +74,10 @@ export class TaskCreateForm {
                 })));
                 this.assignedToPicklistData.content = this.usersPickList();
             }
-            const num = this.notificationsService.addNotification("Clicked", "Sucess");
-            setTimeout(() => {
-                this.notificationsService.removeNotification(num);
-            }, 5000)
+            // const num = this.notificationsService.addNotification("Clicked", "Sucess");
+            // setTimeout(() => {
+            //     this.notificationsService.removeNotification(num);
+            // }, 5000)
         })
     }
 
