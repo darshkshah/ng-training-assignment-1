@@ -43,8 +43,17 @@ INSTALLED_APPS = [
     'todo_api',
     'users_api',
     'rest_framework',
-    'rest_framework_simplejwt'
+    'rest_framework_simplejwt',
+
+    'drf_spectacular',
+    'drf_spectacular_sidecar'
 ]
+
+SPECTACULAR_SETTINGS = {
+    'SWAGGER_UI_DIST': 'SIDECAR',  # shorthand to use the sidecar instead
+    'SWAGGER_UI_FAVICON_HREF': 'SIDECAR',
+    'REDOC_DIST': 'SIDECAR',
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -153,6 +162,15 @@ REST_FRAMEWORK = {
         'users_api.authentication.CookieJWTAuthentication',
         'rest_framework.authentication.TokenAuthentication'
     ],
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Todo List API',
+    'DESCRIPTION': 'Enzigma Assignment 1. It has 3 apps users_api for user authentication (JWT token authentication and cookie authentication both), todo_api for tasks and a health check api',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    # OTHER SETTINGS
 }
 
 SIMPLE_JWT = {

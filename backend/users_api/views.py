@@ -16,6 +16,7 @@ class UserListView(generics.ListAPIView):
 @api_view(['POST'])
 def register_user(request):
     serializer = UserSerializer(data=request.data)
+    print("hey")
     if serializer.is_valid():
         user = serializer.save()
         return Response({
