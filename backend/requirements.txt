@@ -4,3 +4,4 @@ dotenv==0.9.9
 psycopg2-binary==2.9.11
 djangorestframework-simplejwt==5.5.1
 drf-spectacular-sidecar==2026.3.1
+drf-spectacular==0.29.0
