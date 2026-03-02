@@ -1,8 +1,11 @@
 # How to run
 **Video link** demonstrated running the application and the features: https://youtu.be/BbTrGe2laJI
 
-Have docker and git installed:
+## Now to run this application have docker and git installed:
 
+Check if they are installed using the commands `git --version` and `docker --version` if not you can install **docker for windows** from https://docs.docker.com/desktop/setup/install/windows-install/ and **docker for ubuntu** from https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04. You can also use the snap command `sudo snap install docker` to install docker on ubuntu.
+
+After installing docker and git follow these steps:
 1) Clone this Repository. 
 2) Inside the terminal with this repository, Run the command
 - `docker compose up --build`
