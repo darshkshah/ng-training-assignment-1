@@ -4,7 +4,7 @@ Have docker and git installed:
 
 1) Clone this Repository. 
 2) Inside the terminal with this repository, Run the command
-- `docker compose up`
+- `docker compose up --build`
 3) Wait for compose to finish and it will create 3 containers for backend, frontend and database. It will start the project on <b>localhost</b>. Compose will take care of everything. No need to worry about environment.
 4) Open this link for Frontend http://localhost:4200/login
 5) Backend will run on http://localhost:8000. Open this link for API Information: 
