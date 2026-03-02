@@ -19,3 +19,5 @@ Have docker and git installed:
 
 7) Run the command `docker attach dev-todo-frontend` to attach your terminal to docker frontend container's terminal
 8) Run the command `docker attach dev-todo-backend` to attach your terminal to docker backend container's terminal
+
+Video link demonstrated running the application and the features: https://youtu.be/BbTrGe2laJI
