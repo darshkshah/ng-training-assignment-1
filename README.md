@@ -38,5 +38,6 @@ https://www.postman.com/todo-api-2676/enzigma-todo/overview
 
 
 ## The swagger-ui and redoc also has good API documentation.
+> Run the application using docker compose to preview these links
 - http://localhost:8000/api/schema/swagger-ui/
 - http://localhost:8000/api/schema/redoc/
