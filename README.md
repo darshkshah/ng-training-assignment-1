@@ -21,3 +21,22 @@ Have docker and git installed:
 8) Run the command `docker attach dev-todo-backend` to attach your terminal to docker backend container's terminal
 
 Video link demonstrated running the application and the features: https://youtu.be/BbTrGe2laJI
+
+# Features
+This application features :
+- Frontend made using **Angular**
+- Backend made using **Django** (Django REST Framework)
+- **PostgreSQL** for the database
+- **Docker based development environment.** Any changes on the files made while the application is running will be reflected on the running application in realtime through the bind mounts. Though bind mounts works best with linux/WSL host and the alpine based docker containers. Bind mounts dont work well with windows file system as host and alpine based docker containers.
+- **Create, Read, Edit, Delete**, Tasks integration on the UI with the backend apis.
+- **Cookie based authentication** UI integration (authenticates using cookies stored on the browser). Successful login sets the cookie and logout calls the delete cookies api.
+
+# API Endpoints Information
+
+## Postman Workspace
+https://www.postman.com/todo-api-2676/enzigma-todo/overview
+
+
+## The swagger-ui and redoc also has good API documentation.
+- http://localhost:8000/api/schema/swagger-ui/
+- http://localhost:8000/api/schema/redoc/
